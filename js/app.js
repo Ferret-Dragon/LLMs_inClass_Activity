@@ -103,6 +103,7 @@ function render() {
     renderCategoryPage(route.id);
   } else {
     renderCategoryOptions();
+    renderPie();
     renderCategoryBox();
     renderTransactions();
   }
