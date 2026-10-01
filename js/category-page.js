@@ -1,5 +1,12 @@
 // Category page (#/category/<id>): that category's spending as cards.
 let categoryPageId = null;
+let editingLabel = false;
+
+function showLabelError(message) {
+  const error = document.getElementById('label-error');
+  error.textContent = message || '';
+  error.hidden = !message;
+}
 
 function spendingCard(transaction) {
   const card = el('li', 'spend-card');
@@ -24,6 +31,11 @@ function spendingCard(transaction) {
 
 function renderCategoryPage(id) {
   const category = Store.getCategory(id);
+  // Arriving from another page or category closes any half-finished label edit.
+  if (!category || category.id !== categoryPageId) {
+    editingLabel = false;
+    showLabelError('');
+  }
   categoryPageId = category ? category.id : null;
 
   document.getElementById('category-page-missing').hidden = Boolean(category);
@@ -40,6 +52,14 @@ function renderCategoryPage(id) {
   document.getElementById('spend-cards').replaceChildren(...transactions.map(spendingCard));
   document.getElementById('spend-cards-empty').hidden = transactions.length > 0;
 
+  const labelForm = document.getElementById('label-form');
+  if (editingLabel && labelForm.hidden) {
+    labelForm.elements.name.value = category.name;
+    labelForm.elements.color.value = category.color;
+  }
+  labelForm.hidden = !editingLabel;
+  document.getElementById('label-edit-toggle').hidden = editingLabel;
+
   const date = document.querySelector('#card-form [name=date]');
   if (!date.value) date.value = todayISO();
 }
@@ -53,5 +73,26 @@ document.getElementById('card-form').addEventListener('submit', (event) => {
   form.reset();
   form.elements.date.value = todayISO();
   form.elements.description.focus();
+  render();
+});
+
+document.getElementById('label-edit-toggle').addEventListener('click', () => {
+  editingLabel = true;
+  render();
+  document.querySelector('#label-form [name=name]').focus();
+});
+
+document.getElementById('label-cancel').addEventListener('click', () => {
+  editingLabel = false;
+  showLabelError('');
+  render();
+});
+
+document.getElementById('label-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const { name, color } = Object.fromEntries(new FormData(event.currentTarget));
+  const error = Store.updateCategory(categoryPageId, { name, color });
+  showLabelError(error);
+  if (!error) editingLabel = false;
   render();
 });
