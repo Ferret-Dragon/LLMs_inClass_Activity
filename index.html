@@ -9,6 +9,10 @@
 <body>
   <header class="topbar">
     <a class="brand" href="#/">Financer</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/" data-view="home">Home</a>
+      <a href="#/help" data-view="help">Help</a>
+    </nav>
   </header>
 
   <main id="app" class="page">
@@ -113,6 +117,49 @@
         <ul id="spend-cards" class="spend-cards"></ul>
         <p id="spend-cards-empty" class="card empty" hidden>No spending in this category yet. Add a card above.</p>
       </div>
+    </div>
+
+    <div id="view-help" class="view" hidden>
+      <section class="card help">
+        <h1>How to use Financer</h1>
+        <p>Financer keeps track of what you spend and shows where it goes. Everything is saved in this browser on this device.</p>
+
+        <h2>Record spending</h2>
+        <ol>
+          <li>On the <a href="#/">Home</a> page, fill in <strong>Add a transaction</strong>: a description, the amount, a category and the date.</li>
+          <li>Press <strong>Add</strong>. The transaction appears at the top of <strong>Recent transactions</strong>, tinted with its category color.</li>
+          <li>To remove a transaction, press the <strong>&#10005;</strong> at the end of its row.</li>
+        </ol>
+
+        <h2>Review your transactions</h2>
+        <ul>
+          <li>Home shows your 5 most recent transactions. Press <strong>Show all</strong> to list every one.</li>
+          <li>Use the category chips above the list to filter. Select one or more categories, or <strong>All</strong> to clear the filter.</li>
+        </ul>
+
+        <h2>See where your money goes</h2>
+        <ul>
+          <li>The <strong>Spending by category</strong> pie chart shows each category's share of your total.</li>
+          <li>Click a slice, its legend entry, or a category in the <strong>Categories</strong> box to open that category's page.</li>
+        </ul>
+
+        <h2>Category pages</h2>
+        <ul>
+          <li>Each category has its own page, shaded in a lighter tone of its color, with one card per purchase.</li>
+          <li>Use <strong>Add a card</strong> to record spending straight into that category.</li>
+          <li>Press <strong>&larr; All spending</strong> to return to Home.</li>
+        </ul>
+
+        <h2>Manage categories</h2>
+        <ol>
+          <li>In the <strong>Categories</strong> box on Home, press <strong>Edit categories</strong>.</li>
+          <li><strong>Add:</strong> type a name, pick a color and press <strong>Add category</strong>.</li>
+          <li><strong>Rename:</strong> edit the name in its box and press Enter.</li>
+          <li><strong>Recolor:</strong> click the color swatch and pick a new color.</li>
+          <li><strong>Delete:</strong> press <strong>Delete</strong>, then <strong>Confirm delete</strong>. Its transactions are kept and shown as Uncategorized.</li>
+          <li>Press <strong>Done</strong> when you have finished.</li>
+        </ol>
+      </section>
     </div>
   </main>
 
