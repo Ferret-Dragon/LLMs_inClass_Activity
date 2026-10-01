@@ -437,3 +437,35 @@ a.pie-legend-row:hover { background: var(--surface-2); }
   color: var(--muted);
   font-size: 12px;
 }
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.chip {
+  padding: 4px 12px;
+  border: 1px solid var(--cat);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cat);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.chip:hover { background: color-mix(in srgb, var(--cat) 18%, transparent); }
+
+.chip[aria-pressed="true"] {
+  background: var(--cat);
+  color: #111;
+  font-weight: 700;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--cat) 60%, transparent);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 2px;
+}

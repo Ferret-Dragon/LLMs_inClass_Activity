@@ -4,6 +4,8 @@ const UNCATEGORIZED = { id: '', name: 'Uncategorized', color: '#9a9aa8' };
 const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
 let showAll = false;
+// Category ids the list is filtered to; empty means every category.
+const activeFilters = new Set();
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
@@ -68,22 +70,65 @@ function renderCategoryOptions() {
   if (previous && Store.getCategory(previous)) select.value = previous;
 }
 
+function effectiveCategoryId(transaction) {
+  return Store.getCategory(transaction.categoryId) ? transaction.categoryId : UNCATEGORIZED.id;
+}
+
+function filterChip(label, color, pressed, onClick) {
+  const chip = el('button', 'chip', label);
+  chip.type = 'button';
+  chip.style.setProperty('--cat', color);
+  chip.setAttribute('aria-pressed', String(pressed));
+  chip.addEventListener('click', onClick);
+  return chip;
+}
+
+function renderFilterChips(all) {
+  const options = Store.getCategories();
+  if (all.some((t) => effectiveCategoryId(t) === UNCATEGORIZED.id)) options.push(UNCATEGORIZED);
+
+  // Drop filters for categories that have since been deleted.
+  for (const id of activeFilters) {
+    if (!options.some((c) => c.id === id)) activeFilters.delete(id);
+  }
+
+  const chips = options.map((category) =>
+    filterChip(category.name, category.color, activeFilters.has(category.id), () => {
+      if (!activeFilters.delete(category.id)) activeFilters.add(category.id);
+      renderTransactions();
+    })
+  );
+  const allChip = filterChip('All', 'var(--accent-bright)', activeFilters.size === 0, () => {
+    activeFilters.clear();
+    renderTransactions();
+  });
+
+  const container = document.getElementById('filter-chips');
+  container.replaceChildren(allChip, ...chips);
+  container.hidden = all.length === 0;
+}
+
 function renderTransactions() {
   const all = Store.getTransactions();
-  const visible = showAll ? all : all.slice(0, RECENT_COUNT);
+  renderFilterChips(all);
+
+  const filtering = activeFilters.size > 0;
+  const matching = filtering ? all.filter((t) => activeFilters.has(effectiveCategoryId(t))) : all;
+  const visible = showAll ? matching : matching.slice(0, RECENT_COUNT);
 
   document.getElementById('list-heading').textContent = showAll ? 'All transactions' : 'Recent transactions';
   document.getElementById('transaction-list').replaceChildren(...visible.map(transactionRow));
   document.getElementById('transaction-empty').hidden = all.length > 0;
+  document.getElementById('filter-empty').hidden = all.length === 0 || matching.length > 0;
 
   const toggle = document.getElementById('toggle-all');
-  toggle.hidden = all.length <= RECENT_COUNT;
-  toggle.textContent = showAll ? `Show ${RECENT_COUNT} most recent` : `Show all (${all.length})`;
+  toggle.hidden = matching.length <= RECENT_COUNT;
+  toggle.textContent = showAll ? `Show ${RECENT_COUNT} most recent` : `Show all (${matching.length})`;
 
   const total = document.getElementById('transaction-total');
-  total.hidden = all.length === 0;
-  const sum = all.reduce((acc, t) => acc + t.amount, 0);
-  total.replaceChildren('Total spent: ', el('strong', '', money.format(sum)));
+  total.hidden = matching.length === 0;
+  const sum = matching.reduce((acc, t) => acc + t.amount, 0);
+  total.replaceChildren(filtering ? 'Total in selected categories: ' : 'Total spent: ', el('strong', '', money.format(sum)));
 }
 
 function currentRoute() {
