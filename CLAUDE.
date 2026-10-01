@@ -1,0 +1,6 @@
+We're creating an app where users can mark down and track their spending.  
+On the landing page they show see a collective view of their 5 most recent transactions.
+There should be a pie chart to see how much of their spending is in each category (they may create different categories ex: groceries, media, toys, travel)
+They can click on sections of the pie chart to see a more detailed list of spending in each of those categories.
+They can also filter by categories
+Categories are color coded
