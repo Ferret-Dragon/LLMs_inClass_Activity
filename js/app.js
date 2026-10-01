@@ -86,10 +86,26 @@ function renderTransactions() {
   total.replaceChildren('Total spent: ', el('strong', '', money.format(sum)));
 }
 
+function currentRoute() {
+  const [view, id] = location.hash.replace(/^#\/?/, '').split('/');
+  if (view === 'category' && id) return { view: 'category', id: decodeURIComponent(id) };
+  return { view: 'home' };
+}
+
 function render() {
-  renderCategoryOptions();
-  renderCategoryBox();
-  renderTransactions();
+  const route = currentRoute();
+  for (const view of document.querySelectorAll('#app > .view')) {
+    view.hidden = view.id !== `view-${route.view}`;
+  }
+  document.body.classList.toggle('category-view', route.view === 'category');
+
+  if (route.view === 'category') {
+    renderCategoryPage(route.id);
+  } else {
+    renderCategoryOptions();
+    renderCategoryBox();
+    renderTransactions();
+  }
 }
 
 document.getElementById('transaction-form').addEventListener('submit', (event) => {
@@ -107,6 +123,11 @@ document.getElementById('transaction-form').addEventListener('submit', (event) =
 document.getElementById('toggle-all').addEventListener('click', () => {
   showAll = !showAll;
   renderTransactions();
+});
+
+window.addEventListener('hashchange', () => {
+  window.scrollTo(0, 0);
+  render();
 });
 
 document.querySelector('#transaction-form [name=date]').value = todayISO();
