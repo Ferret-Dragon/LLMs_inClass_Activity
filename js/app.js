@@ -134,6 +134,7 @@ function renderTransactions() {
 function currentRoute() {
   const [view, id] = location.hash.replace(/^#\/?/, '').split('/');
   if (view === 'category' && id) return { view: 'category', id: decodeURIComponent(id) };
+  if (view === 'help') return { view: 'help' };
   return { view: 'home' };
 }
 
@@ -143,10 +144,14 @@ function render() {
     view.hidden = view.id !== `view-${route.view}`;
   }
   document.body.classList.toggle('category-view', route.view === 'category');
+  for (const link of document.querySelectorAll('.nav a')) {
+    if (link.dataset.view === route.view) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  }
 
   if (route.view === 'category') {
     renderCategoryPage(route.id);
-  } else {
+  } else if (route.view === 'home') {
     renderCategoryOptions();
     renderPie();
     renderCategoryBox();

@@ -469,3 +469,45 @@ a.pie-legend-row:hover { background: var(--surface-2); }
   outline: 2px solid var(--accent-bright);
   outline-offset: 2px;
 }
+
+.nav {
+  display: flex;
+  gap: 6px;
+}
+
+.nav a {
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.nav a:hover { color: var(--text); }
+
+.nav a[aria-current="page"] {
+  color: var(--accent-bright);
+  background: var(--surface-2);
+  box-shadow: var(--glow);
+}
+
+.help { padding: 24px 28px; }
+
+.help h1 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  color: var(--accent-bright);
+  text-shadow: var(--glow);
+}
+
+.help h2 { margin: 22px 0 8px; }
+
+.help p { margin: 0; color: var(--muted); }
+
+.help ol, .help ul {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.help li { margin: 4px 0; }
+
+.help a { color: var(--accent-bright); }
