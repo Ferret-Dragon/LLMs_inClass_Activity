@@ -82,6 +82,7 @@ function renderTransactions() {
 
 function render() {
   renderCategoryOptions();
+  renderCategoryBox();
   renderTransactions();
 }
 

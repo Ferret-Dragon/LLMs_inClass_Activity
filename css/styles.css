@@ -208,3 +208,48 @@ input:focus, select:focus, .btn:focus-visible {
 }
 
 .total strong { color: var(--text); }
+
+.category-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 8px;
+}
+
+.category-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-2);
+}
+
+.swatch {
+  grid-row: span 2;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--cat);
+  box-shadow: 0 0 8px var(--cat);
+}
+
+.category-name { font-weight: 600; }
+
+.category-count {
+  grid-column: 2;
+  grid-row: 2;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.category-amount {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
