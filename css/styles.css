@@ -46,6 +46,9 @@ body {
   max-width: 960px;
   margin: 0 auto;
   padding: 24px 16px 48px;
+}
+
+.view {
   display: grid;
   gap: 20px;
 }
@@ -286,4 +289,82 @@ input[type="color"] {
 .error {
   margin: 10px 0 0;
   color: var(--danger);
+}
+
+a.category-item {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.category-item:hover,
+a.category-item:focus-visible {
+  outline: none;
+  border-color: var(--cat);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--cat) 60%, transparent);
+}
+
+/* Category page: the whole page sits on a lightened shade of the category color. */
+body.category-view {
+  min-height: 100vh;
+  background: color-mix(in srgb, var(--cat) 45%, white);
+}
+
+.back-link {
+  justify-self: start;
+  color: #1b1b1f;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back-link:hover { text-decoration: underline; }
+
+.category-page-head { color: #1b1b1f; }
+
+.category-page-head h1 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.category-page-head p {
+  margin: 2px 0 0;
+  font-weight: 600;
+}
+
+.spend-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.spend-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 6px 8px;
+  padding: 14px;
+  border-radius: 12px;
+  border-top: 5px solid var(--cat);
+  background: var(--surface);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.spend-card-desc {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.spend-card-amount {
+  grid-column: 1 / -1;
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.spend-card-date {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 12px;
 }

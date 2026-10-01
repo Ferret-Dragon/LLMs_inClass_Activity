@@ -24,11 +24,14 @@ function categoryTotals() {
 function categoryItem(category, totals) {
   const { amount, count } = totals.get(category.id) || { amount: 0, count: 0 };
 
-  const item = el('li', 'category-item');
-  item.style.setProperty('--cat', category.color);
-  item.dataset.category = category.id;
+  const item = el('li');
+  const link = el('a', 'category-item');
+  link.href = `#/category/${encodeURIComponent(category.id)}`;
+  link.title = `Open ${category.name}`;
+  link.style.setProperty('--cat', category.color);
+  item.append(link);
 
-  item.append(
+  link.append(
     el('span', 'swatch'),
     el('span', 'category-name', category.name),
     el('span', 'category-count', `${count} ${count === 1 ? 'transaction' : 'transactions'}`),
