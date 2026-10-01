@@ -37,6 +37,41 @@ const Store = (() => {
     return state.categories.find((c) => c.id === id) || null;
   }
 
+  function nameTaken(name, exceptId) {
+    const wanted = name.trim().toLowerCase();
+    return state.categories.some((c) => c.id !== exceptId && c.name.toLowerCase() === wanted);
+  }
+
+  // Category writes return an error message, or null on success.
+  function addCategory({ name, color }) {
+    name = name.trim();
+    if (!name) return 'Category name is required.';
+    if (nameTaken(name)) return `A category named "${name}" already exists.`;
+    state.categories.push({ id: newId(), name, color });
+    save();
+    return null;
+  }
+
+  function updateCategory(id, { name, color }) {
+    const category = getCategory(id);
+    if (!category) return 'Category not found.';
+    if (name !== undefined) {
+      name = name.trim();
+      if (!name) return 'Category name is required.';
+      if (nameTaken(name, id)) return `A category named "${name}" already exists.`;
+      category.name = name;
+    }
+    if (color !== undefined) category.color = color;
+    save();
+    return null;
+  }
+
+  // Transactions keep their amounts and show as Uncategorized afterwards.
+  function deleteCategory(id) {
+    state.categories = state.categories.filter((c) => c.id !== id);
+    save();
+  }
+
   // Newest first: by transaction date, then by when it was entered.
   function getTransactions() {
     return state.transactions
@@ -63,5 +98,14 @@ const Store = (() => {
     save();
   }
 
-  return { getCategories, getCategory, getTransactions, addTransaction, deleteTransaction };
+  return {
+    getCategories,
+    getCategory,
+    addCategory,
+    updateCategory,
+    deleteCategory,
+    getTransactions,
+    addTransaction,
+    deleteTransaction,
+  };
 })();

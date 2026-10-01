@@ -38,9 +38,22 @@
     <section class="card" id="category-box" aria-labelledby="category-heading">
       <div class="card-head">
         <h2 id="category-heading">Categories</h2>
+        <button type="button" id="category-edit-toggle" class="btn btn-ghost">Edit categories</button>
       </div>
       <ul id="category-list" class="category-list"></ul>
-      <p id="category-empty" class="empty" hidden>No categories yet.</p>
+      <p id="category-empty" class="empty" hidden>No categories yet. Choose "Edit categories" to add one.</p>
+      <form id="category-form" class="form-row category-form" hidden>
+        <label>
+          <span>New category name</span>
+          <input name="name" type="text" maxlength="30" required placeholder="e.g. Dining out">
+        </label>
+        <label class="color-field">
+          <span>Color</span>
+          <input name="color" type="color" value="#a78bfa">
+        </label>
+        <button type="submit" class="btn btn-primary">Add category</button>
+      </form>
+      <p id="category-error" class="error" role="alert" hidden></p>
     </section>
 
     <section class="card" aria-labelledby="list-heading">
