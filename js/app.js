@@ -52,13 +52,19 @@ function transactionRow(transaction) {
 function renderCategoryOptions() {
   const select = document.querySelector('#transaction-form [name=categoryId]');
   const previous = select.value;
+  const categories = Store.getCategories();
   select.replaceChildren(
-    ...Store.getCategories().map((c) => {
+    ...categories.map((c) => {
       const option = el('option', '', c.name);
       option.value = c.id;
       return option;
     })
   );
+  if (categories.length === 0) {
+    const placeholder = el('option', '', 'Create a category first');
+    placeholder.value = '';
+    select.append(placeholder);
+  }
   if (previous && Store.getCategory(previous)) select.value = previous;
 }
 
