@@ -260,8 +260,6 @@ input:focus, select:focus, .btn:focus-visible {
   font-weight: 700;
 }
 
-.category-item.editing { grid-template-columns: auto 1fr auto; }
-
 input[type="color"] {
   width: 38px;
   height: 36px;
@@ -554,4 +552,28 @@ a.pie-legend-row:hover { background: var(--surface-2); }
 .spend-card .category-picker {
   grid-column: 1 / -1;
   justify-self: start;
+}
+
+/* "+" tile at the end of the category list. */
+.category-add {
+  width: 100%;
+  height: 100%;
+  min-height: 58px;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--accent-bright);
+  font: inherit;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.category-add:hover,
+.category-add:focus-visible,
+.category-add[aria-expanded="true"] {
+  outline: none;
+  border-style: solid;
+  border-color: var(--accent-bright);
+  box-shadow: var(--glow);
 }
