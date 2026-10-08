@@ -1,6 +1,8 @@
 // Category page (#/category/<id>): that category's spending as cards.
 let categoryPageId = null;
 let editingLabel = false;
+// Deleting asks for a second click instead of a blocking confirm dialog.
+let confirmingDelete = false;
 
 function showLabelError(message) {
   const error = document.getElementById('label-error');
@@ -36,6 +38,7 @@ function renderCategoryPage(id) {
   // Arriving from another page or category closes any half-finished label edit.
   if (!category || category.id !== categoryPageId) {
     editingLabel = false;
+    confirmingDelete = false;
     showLabelError('');
   }
   categoryPageId = category ? category.id : null;
@@ -60,6 +63,9 @@ function renderCategoryPage(id) {
     labelForm.elements.color.value = category.color;
   }
   labelForm.hidden = !editingLabel;
+  const remove = document.getElementById('category-delete');
+  remove.textContent = confirmingDelete ? 'Confirm delete' : 'Delete category';
+  remove.classList.toggle('confirming', confirmingDelete);
   document.getElementById('label-edit-toggle').hidden = editingLabel;
 
   const date = document.querySelector('#card-form [name=date]');
@@ -86,6 +92,7 @@ document.getElementById('label-edit-toggle').addEventListener('click', () => {
 
 document.getElementById('label-cancel').addEventListener('click', () => {
   editingLabel = false;
+  confirmingDelete = false;
   showLabelError('');
   render();
 });
@@ -97,4 +104,16 @@ document.getElementById('label-form').addEventListener('submit', (event) => {
   showLabelError(error);
   if (!error) editingLabel = false;
   render();
+});
+
+document.getElementById('category-delete').addEventListener('click', () => {
+  if (!confirmingDelete) {
+    confirmingDelete = true;
+    render();
+    return;
+  }
+  Store.deleteCategory(categoryPageId);
+  confirmingDelete = false;
+  editingLabel = false;
+  location.hash = '#/';
 });

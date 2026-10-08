@@ -55,10 +55,8 @@
     <section class="card" id="category-box" aria-labelledby="category-heading">
       <div class="card-head">
         <h2 id="category-heading">Categories</h2>
-        <button type="button" id="category-edit-toggle" class="btn btn-ghost">Edit categories</button>
       </div>
       <ul id="category-list" class="category-list"></ul>
-      <p id="category-empty" class="empty" hidden>No categories yet. Choose "Edit categories" to add one.</p>
       <form id="category-form" class="form-row category-form" hidden>
         <label>
           <span>New category name</span>
@@ -69,6 +67,7 @@
           <input name="color" type="color" value="#a78bfa">
         </label>
         <button type="submit" class="btn btn-primary">Add category</button>
+        <button type="button" id="category-cancel" class="btn">Cancel</button>
       </form>
       <p id="category-error" class="error" role="alert" hidden></p>
     </section>
@@ -108,6 +107,7 @@
             </label>
             <button type="submit" class="btn btn-primary">Save</button>
             <button type="button" id="label-cancel" class="btn">Cancel</button>
+            <button type="button" id="category-delete" class="btn btn-danger">Delete category</button>
           </form>
           <p id="label-error" class="error" role="alert" hidden></p>
         </header>
@@ -171,12 +171,9 @@
 
         <h2>Manage categories</h2>
         <ol>
-          <li>In the <strong>Categories</strong> box on Home, press <strong>Edit categories</strong>.</li>
-          <li><strong>Add:</strong> type a name, pick a color and press <strong>Add category</strong>.</li>
-          <li><strong>Rename:</strong> edit the name in its box and press Enter.</li>
-          <li><strong>Recolor:</strong> click the color swatch and pick a new color.</li>
-          <li><strong>Delete:</strong> press <strong>Delete</strong>, then <strong>Confirm delete</strong>. Its transactions are kept and shown as Uncategorized.</li>
-          <li>Press <strong>Done</strong> when you have finished.</li>
+          <li><strong>Add:</strong> in the <strong>Categories</strong> box on Home, press the <strong>+</strong> tile, type a name, pick a color and press <strong>Add category</strong>.</li>
+          <li><strong>Rename or recolor:</strong> open the category's page and press <strong>Edit label</strong>.</li>
+          <li><strong>Delete:</strong> on the category's page, press <strong>Edit label</strong>, then <strong>Delete category</strong> and <strong>Confirm delete</strong>. Its transactions are kept and shown as Uncategorized.</li>
         </ol>
       </section>
     </div>
