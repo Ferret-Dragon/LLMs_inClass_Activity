@@ -8,7 +8,7 @@ function showLabelError(message) {
   error.hidden = !message;
 }
 
-function spendingCard(transaction) {
+function spendingCard(transaction, category) {
   const card = el('li', 'spend-card');
 
   const remove = el('button', 'icon-btn', '✕');
@@ -24,8 +24,10 @@ function spendingCard(transaction) {
     el('span', 'spend-card-desc', transaction.description),
     remove,
     el('span', 'spend-card-amount', money.format(transaction.amount)),
-    el('span', 'spend-card-date', formatDate(transaction.date))
+    el('span', 'spend-card-date', formatDate(transaction.date)),
+    categoryLabel(transaction, category)
   );
+  openPickerOnClick(card, transaction);
   return card;
 }
 
@@ -49,7 +51,7 @@ function renderCategoryPage(id) {
   document.getElementById('category-page-name').textContent = category.name;
   document.getElementById('category-page-total').textContent =
     `${money.format(total)} across ${transactions.length} ${transactions.length === 1 ? 'card' : 'cards'}`;
-  document.getElementById('spend-cards').replaceChildren(...transactions.map(spendingCard));
+  document.getElementById('spend-cards').replaceChildren(...transactions.map((t) => spendingCard(t, category)));
   document.getElementById('spend-cards-empty').hidden = transactions.length > 0;
 
   const labelForm = document.getElementById('label-form');
