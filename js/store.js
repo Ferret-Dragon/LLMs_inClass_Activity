@@ -93,6 +93,13 @@ const Store = (() => {
     return transaction;
   }
 
+  function updateTransaction(id, { categoryId }) {
+    const transaction = state.transactions.find((t) => t.id === id);
+    if (!transaction) return;
+    transaction.categoryId = categoryId;
+    save();
+  }
+
   function deleteTransaction(id) {
     state.transactions = state.transactions.filter((t) => t.id !== id);
     save();
@@ -106,6 +113,7 @@ const Store = (() => {
     deleteCategory,
     getTransactions,
     addTransaction,
+    updateTransaction,
     deleteTransaction,
   };
 })();

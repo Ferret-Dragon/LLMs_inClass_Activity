@@ -176,6 +176,9 @@ input:focus, select:focus, .btn:focus-visible {
 
 .badge {
   display: inline-block;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
   padding: 1px 8px;
   border-radius: 999px;
   background: var(--cat);
@@ -530,3 +533,25 @@ a.pie-legend-row:hover { background: var(--surface-2); }
 .help li { margin: 4px 0; }
 
 .help a { color: var(--accent-bright); }
+
+/* Rows and cards open a category picker when clicked. */
+.relabelable { cursor: pointer; }
+
+.relabelable:hover .badge,
+.badge:focus-visible {
+  outline: 2px solid var(--cat);
+  outline-offset: 2px;
+}
+
+.category-picker {
+  width: auto;
+  padding: 2px 8px;
+  border-color: var(--cat);
+  font-size: 12px;
+}
+
+.spend-card .badge,
+.spend-card .category-picker {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
